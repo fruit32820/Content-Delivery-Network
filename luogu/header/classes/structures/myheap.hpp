@@ -1,9 +1,6 @@
 #ifndef MYHEAP_HPP
 #define MYHEAP_HPP
 
-#if __cplusplus >= 201103L
-
-#include<algorithm>
 #include<stdexcept>
 
 template<typename T=int, typename Compare=std::greater<T> >
@@ -47,23 +44,62 @@ public:
 
     ~myheap() { delete[] p; }
 
+    
+    bool full() const { return len >= ms; }
+    bool empty() const { return !len; }
+    unsigned long long size() const { return len; }
+    void clear() { len = 0; }
+
+#if __cplusplus >= 201103L
+
     myheap(const myheap&) = delete;
     myheap& operator=(const myheap&) = delete;
 
+#else
+
+    myheap(const myheap& other) : ms(other.ms), len(other.len), comp(other.comp) {
+        p = new T[ms + 1];
+        std::copy(other.p, other.p + len + 1, p);
+    }
+
+    myheap& operator=(const myheap& other) {
+        if(this != &other) {
+            if(ms < other.ms) {
+                delete[] p;
+                ms = other.ms;
+                p = new T[ms + 1];
+            }
+            len = other.len;
+            comp = other.comp;
+            std::copy(other.p, other.p + len + 1, p);
+        }
+        return *this;
+    }
+
+#endif // __cplusplus >= 201103L
+
     T get(unsigned long long pos) const {
-        if(!valid(pos)) throw std::out_of_range("Access location does not exist.");
+        if(!valid(pos)) throw std::out_of_range("Position is out of range.");
         return p[pos];
     }
 
+    T at(unsigned long long pos) const {
+        return get(pos);
+    }
+
+    T operator[](unsigned long long pos) const {
+        return get(pos);
+    }
+
     void modify(unsigned long long pos, const T& x) {
-        if(!valid(pos)) throw std::out_of_range("Modify location does not exist.");
+        if(!valid(pos)) throw std::out_of_range("Position is out of range.");
         p[pos] = x;
         fix(pos);
         repair(pos);
     }
 
     void erase(unsigned long long pos) {
-        if(!valid(pos)) throw std::out_of_range("Delete location does not exist.");
+        if(!valid(pos)) throw std::out_of_range("Position is out of range.");
         if(pos == len) { len--; return; }
         p[pos] = p[len--];
         fix(pos);
@@ -71,29 +107,21 @@ public:
     }
 
     void push(const T& val) {
-        if(len >= ms) throw std::overflow_error("Heap is full, cannot insert.");
+        if(full()) throw std::overflow_error("Heap is full.");
         p[++len] = val;
         fix(len);
     }
 
     T top() const {
-        if(!len) throw std::underflow_error("Heap is empty, no top.");
+        if(empty()) throw std::underflow_error("Heap is empty.");
         return p[1];
     }
 
     void pop_top() {
-        if(!len) throw std::underflow_error("Heap is empty, cannot delete.");
+        if(empty()) throw std::underflow_error("Heap is empty.");
         p[1] = p[len--];
         repair(1);
     }
-
-    bool full() const { return len >= ms; }
-    bool empty() const { return !len; }
-    unsigned long long size() const { return len; }
-    void clear() { len = 0; }
 };
 
-#endif // __cplusplus >= 201103L
-
 #endif // MYHEAP_HPP
-
