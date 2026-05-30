@@ -1,0 +1,19 @@
+when:
+  branch: main
+  event: push
+steps:
+  gen:
+    image: alpine:latest
+    commands:
+      - apk add bash sed grep
+      - CONTENT_FILE=.ci/regions/Codeberg.md
+      - cp README.tpl README.md
+      - grep -o 'REGION_PLACEHOLDER[-_0-9a-zA-Z]*' README.tpl | sort -u | while read TAG;do
+          CONTENT=$(sed -n "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!p}" "$CONTENT_FILE")
+          sed -i "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!d;s|<!-- $TAG -->|<!-- $TAG -->\n$CONTENT|}" README.md
+        done
+      - git config user.name Bot
+      - git config user.email bot@codeberg.org
+      - git add README.md
+      - git commit -m "[CI] Auto build Codeberg README" || true
+      - git push

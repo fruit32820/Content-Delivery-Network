@@ -39,3 +39,6 @@
 
 # debug information files
 *.dwo
+
+# 本地README文件
+README.md

@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试当前文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "externalConsole": true,
+            "preLaunchTask": "${defaultBuildTask}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/gcc_15.2.0/bin/gdb.exe"
+        },
+        {
+            "name": "调试整项目main",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/main.exe",
+            "cwd": "${fileDirname}",
+            "externalConsole": true,
+            "preLaunchTask": "混编全目录C+CPP",
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/gcc_15.2.0/bin/gdb.exe"
+        }
+    ]
+}

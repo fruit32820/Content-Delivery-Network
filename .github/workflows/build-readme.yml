@@ -1,0 +1,21 @@
+name: BuildReadme
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          CONTENT_FILE=.ci/regions/Github.md
+          cp README.tpl README.md
+          grep -o 'REGION_PLACEHOLDER[-_0-9a-zA-Z]*' README.tpl | sort -u | while read TAG;do
+            CONTENT=$(sed -n "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!p}" "$CONTENT_FILE")
+            sed -i "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!d;s|<!-- $TAG -->|<!-- $TAG -->\n$CONTENT|}" README.md
+          done
+          git config user.name Bot
+          git config user.email bot@github.com
+          git add README.md
+          git commit -m "[CI] Auto build Github README" || true
+          git push

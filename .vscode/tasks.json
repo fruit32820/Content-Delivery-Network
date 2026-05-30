@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "编译C(gcc)",
+            "command": "gcc",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "-static-libgcc"
+            ],
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": "**.c"
+            }
+        },
+        {
+            "type": "cppbuild",
+            "label": "编译C++(g++)",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "-static-libgcc",
+                "-static-libstdc++"
+            ],
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": "**.{cpp,hpp}"
+            }
+        },
+        {
+            "type": "cppbuild",
+            "label": "混编全目录C+CPP",
+            "command": "g++",
+            "args": [
+                "${fileDirname}/*.c",
+                "${fileDirname}/*.cpp",
+                "-o",
+                "${fileDirname}/main.exe",
+                "-g",
+                "-static-libgcc",
+                "-static-libstdc++"
+            ],
+            "problemMatcher": "$gcc"
+        }
+    ]
+}
