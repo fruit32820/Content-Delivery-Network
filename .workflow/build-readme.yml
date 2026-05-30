@@ -1,0 +1,25 @@
+version: '1.0'
+name: build-readme
+displayName: Gitee自动生成README
+triggers:
+  push:
+    branches:
+      precise: [main]
+agent:
+  image: ubuntu:latest
+stages:
+  - build
+build:
+  stage: build
+  script: |
+    git config --global user.name Bot
+    git config --global user.email bot@gitee.com
+    CONTENT_FILE=.ci/regions/Gitee.md
+    cp README.tpl README.md
+    grep -o 'REGION_PLACEHOLDER[-_0-9a-zA-Z]*' README.tpl | sort -u | while read TAG;do
+      CONTENT=$(sed -n "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!p}" "$CONTENT_FILE")
+      sed -i "/<!-- $TAG -->/,/<!-- END_$TAG -->/{//!d;s|<!-- $TAG -->|<!-- $TAG -->\n$CONTENT|}" README.md
+    done
+    git add README.md
+    git commit -m "[CI] Auto build Gitee README" || true
+    git push https://${f75fd2d18a56cf0381863efadccf2998}@gitee.com/fruit-32820/CDN.git main
