@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		 更好的洛谷
-// @version      0.14
+// @version      0.14-fixbug
 // @description  支持洛谷卡片背景自定义（支持HEX、RGBA，有预览）、本地持久化、跨页同步、自动关闭广告
 // @author	     Zheng Haozhe
 // @match		 https://*.luogu.com.cn/*
@@ -11,8 +11,8 @@
 // @homepageURL  https://github.com/fruit32820/Content-Delivery-Network
 // @source       https://github.com/fruit32820/Content-Delivery-Network/blob/main/luogu/TamperMonkey-Scripts/BetterLuogu.js
 // @supportURL   https://github.com/fruit32820/Content-Delivery-Network/issues?q=label%3ATamperMonkeyScript%3Aluogu%2FBetterLuogu.js
-// @updateURL    https://cdn.jsdelivr.net/gh/fruit32820/Content-Delivery-Network@main/luogu/TamperMonkey-Scripts/BetterLuogu.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/fruit32820/Content-Delivery-Network@main/luogu/TamperMonkey-Scripts/BetterLuogu.js
+// @updateURL    https://github.com/fruit32820/Content-Delivery-Network/raw/refs/heads/main/luogu/TamperMonkey-Scripts/BetterLuogu.js
+// @downloadURL  https://github.com/fruit32820/Content-Delivery-Network/raw/refs/heads/main/luogu/TamperMonkey-Scripts/BetterLuogu.js
 // ==/UserScript==
 (function() {
 	'use strict';
@@ -268,7 +268,7 @@
 		panel.className = 'luogu-card-setting-panel';
 		panel.innerHTML = `
 			<h3>更好的洛谷--设置</h3>
-			<h4>卡片背景</h4>
+			<h4>卡片、代码块、模态框背景</h4>
 			<hr/>
 			<div class="row row-full">
 				<span>HEX颜色</span>
@@ -413,14 +413,14 @@
 		gearBtn = btn;
 
 		// 延迟取色更新图标（等待布局渲染完成）
-		setTimeout(updateGearIcon, 120);
+		// setTimeout(updateGearIcon, 120);
 	}
 
 	// 核心页面渲染逻辑
 	function applyTheme() {
 		insertSettingButton();
 		// 每次主题更新重新检测按钮背景切换图标
-		setTimeout(updateGearIcon, 80);
+		// setTimeout(updateGearIcon, 80);
 
 		const pageEl = document.querySelector(".theme-page");
 		if (pageEl) {
