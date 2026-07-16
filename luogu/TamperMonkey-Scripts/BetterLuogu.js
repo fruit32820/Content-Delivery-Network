@@ -10,7 +10,7 @@
 // @namespace	 https://github.com/fruit32820
 // @homepageURL  https://github.com/fruit32820/Content-Delivery-Network
 // @source       https://github.com/fruit32820/Content-Delivery-Network/blob/main/luogu/TamperMonkey-Scripts/BetterLuogu.js
-// @supportURL   https://github.com/fruit32820/Content-Delivery-Network/issues?q=label%3Aluogu%2FBetterLuogu.js
+// @supportURL   https://github.com/fruit32820/Content-Delivery-Network/issues?q=label%3ATamperMonkeyScript%3Aluogu%2FBetterLuogu.js
 // @updateURL    https://cdn.jsdelivr.net/gh/fruit32820/Content-Delivery-Network@main/luogu/TamperMonkey-Scripts/BetterLuogu.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/fruit32820/Content-Delivery-Network@main/luogu/TamperMonkey-Scripts/BetterLuogu.js
 // ==/UserScript==
